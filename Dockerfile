@@ -23,5 +23,8 @@ RUN chmod +x /actions-runner/install_actions.sh \
 COPY token.sh entrypoint.sh ephemeral-runner.sh /
 RUN chmod +x /token.sh /entrypoint.sh /ephemeral-runner.sh
 
+RUN sudo apt-get install valgrind check
+RUN git clone https://github.com/WolfgangSt/libelf.git -q && cd libelf && sudo ./configure && make -s && sudo make install -s
+
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["./bin/Runner.Listener", "run", "--startuptype", "service"]
